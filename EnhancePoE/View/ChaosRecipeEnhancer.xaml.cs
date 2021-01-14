@@ -3,6 +3,7 @@ using EnhancePoE.UserControls;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -290,6 +291,7 @@ namespace EnhancePoE
             aTimer.AutoReset = true;
             aTimer.Enabled = false;
             FullSetsText = "0";
+            
         }
 
 
@@ -565,5 +567,31 @@ namespace EnhancePoE
         #endregion
 
 
+        public void CreateFileWatcher(string path)
+        {
+            // Create a new FileSystemWatcher and set its properties.
+            FileSystemWatcher watcher = new FileSystemWatcher();
+            watcher.Path = path;
+            /* Watch for changes in LastAccess and LastWrite times, and 
+               the renaming of files or directories. */
+            watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite
+               | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+            // Only watch text files.
+            watcher.Filter = "client.txt";
+
+            // Add event handlers.
+            watcher.Changed += new FileSystemEventHandler(OnChanged);
+
+            // Begin watching.
+            watcher.EnableRaisingEvents = true;
+        }
+
+        // Define the event handlers.
+        private void OnChanged(object source, FileSystemEventArgs e)
+        {
+            // Specify what is done when a file is changed, created, or deleted.
+            MessageBox.Show("Change detected");
+            FetchData();
+        }
     }
 }

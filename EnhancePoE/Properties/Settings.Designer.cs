@@ -550,5 +550,17 @@ namespace EnhancePoE.Properties {
                 this["ShowItemAmount"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ClientTxtLocation {
+            get {
+                return ((string)(this["ClientTxtLocation"]));
+            }
+            set {
+                this["ClientTxtLocation"] = value;
+            }
+        }
     }
 }

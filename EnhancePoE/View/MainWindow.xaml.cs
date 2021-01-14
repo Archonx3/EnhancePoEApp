@@ -287,6 +287,7 @@ namespace EnhancePoE
                 {
                     overlay.Show();
                     RunButton.Content = "Stop Overlay";
+                    overlay.CreateFileWatcher(System.IO.Path.GetDirectoryName(Properties.Settings.Default.ClientTxtLocation));
                 }
             }
             //bool ready = CheckAllSettings();
@@ -568,6 +569,21 @@ namespace EnhancePoE
             }
         }
 
+        private void ClientTxtFileDialog_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog open = new OpenFileDialog();
+            open.Filter = "ClientTxt|Client.txt";
+            DialogResult res = open.ShowDialog();
+            if (res == System.Windows.Forms.DialogResult.OK)
+            {
+                string filename = open.FileName;
+                //LootfilterFileDialog.Text = filename;
+                Properties.Settings.Default.ClientTxtLocation = filename;
+                //LootfilterFileDialog.Select(LootfilterFileDialog.Text.Length, 0);
+                ClientTxtFileDialog.Content = filename;
+            }
+        }
+
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             LoadModeVisibility();
@@ -660,5 +676,6 @@ namespace EnhancePoE
             overlay.AmountsVisibility = Visibility.Hidden;
 
         }
+
     }
 }
